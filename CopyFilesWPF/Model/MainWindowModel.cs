@@ -6,17 +6,13 @@ namespace CopyFilesWPF.Model
 {
     public class MainWindowModel
     {
-        public FilePath FilePath { get; set; }
-
-        public MainWindowModel() {
-            FilePath = new FilePath();
-        }
+        public FilePath FilePath { get; set; } = new();
 
         public void CopyFile(ProgressChangeDelegate onProgressChanged, CompleteDelegate onComplete, Grid gridPanel)
         {
             var copier = new FileCopier(FilePath, onProgressChanged, onComplete, gridPanel);
             gridPanel.Tag = copier;
-            var newCopierThread = new Thread(new ThreadStart(copier.CopyFile))
+            var newCopierThread = new Thread(() => copier.CopyFile(CancellationToken.None))
             {
                 IsBackground = true
             };

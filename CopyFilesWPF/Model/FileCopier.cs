@@ -11,7 +11,7 @@ namespace CopyFilesWPF.Model
         private readonly Grid _gridPanel;
         private readonly FilePath _filePath;
 
-        public delegate void ProgressChangeDelegate(double progress, ref bool cancel, Grid gridPanel);
+        public delegate void ProgressChangeDelegate(double progress, Grid gridPanel);
         public delegate void CompleteDelegate(Grid gridPanel);
         public event ProgressChangeDelegate OnProgressChanged;
         public event CompleteDelegate OnComplete;
@@ -31,67 +31,71 @@ namespace CopyFilesWPF.Model
             _gridPanel = gridPanel;
         }
 
-        public void CopyFile()
+        public void CopyFile(CancellationToken cancellationToken)
         {
-            byte[] buffer = new byte[1024 * 1024];
-            bool isCopy = true; // переделать решение на использование CancellationToken
+            var buffer = new byte[1024 * 1024];
 
-            while (isCopy)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    using(var source = new FileStream(_filePath.PathFrom, FileMode.Open, FileAccess.Read))
+                    using var source = new FileStream(_filePath.PathFrom, FileMode.Open, FileAccess.Read);
+                    var fileLength = source.Length;
+                    using var destination = new FileStream(_filePath.PathTo, FileMode.CreateNew, FileAccess.Write);
+                    
+                    long totalBytes = 0;
+                    int currentBlockSize;
+                        
+                    while ((currentBlockSize = source.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        var fileLength = source.Length;
-                        using var destination = new FileStream(_filePath.PathTo, FileMode.CreateNew, FileAccess.Write);
-                        long totalBytes = 0;
-                        int currentBlockSize = 0;
-                        while ((currentBlockSize = source.Read(buffer, 0, buffer.Length)) > 0)
+                        totalBytes += currentBlockSize;
+                        var percentage = totalBytes * 100.0 / fileLength;
+                        destination.Write(buffer, 0, currentBlockSize);
+                        OnProgressChanged(percentage, _gridPanel);
+
+                        if(cancellationToken.IsCancellationRequested)
                         {
-                            totalBytes += currentBlockSize;
-                            double persentage = totalBytes * 100.0 / fileLength;
-                            destination.Write(buffer, 0, currentBlockSize);
-                            OnProgressChanged(persentage, ref CancelFlag, _gridPanel);
-
-                            if(CancelFlag == true)
-                            {
-                                File.Delete(_filePath.PathTo);
-                                isCopy = false;
-                                break;
-                            }
-
-                            CancelFlag = false; // переделать решение на использование CancellationToken
-                            PauseFlag.WaitOne(Timeout.Infinite); // переделать на thread suspend
+                            File.Delete(_filePath.PathTo);
+                            return;
                         }
+                        
+                        Thread.CurrentThread.Suspend();
                     }
-                    isCopy = false;
+
+                    break;
                 }
                 catch (IOException error)
                 {
-                    // порефакторить код ниже
-                    if (!CancelFlag)
-                    {
-                        var result = MessageBox.Show(error.Message + " Replace?", "Replace?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        isCopy = result == MessageBoxResult.Yes;
-
-                        if (isCopy)
-                        {
-                            File.Delete(_filePath.PathTo);
-                        }
-                    }
-                    else
-                    {
-                        var result = MessageBox.Show(error.Message + " Copying was canceled!", "Cancel", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                        isCopy = false;
-                        File.Delete(_filePath.PathTo);
-                    }
+                    HandleIOException(cancellationToken, error);
+                    break;
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show(error.Message, "Error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(error.Message, "Error occured!", MessageBoxButton.OK, MessageBoxImage.Error); 
+                    break;
                 }
             }
             OnComplete(_gridPanel);
+        }
+
+        private bool HandleIOException(CancellationToken cancellationToken, IOException error)
+        {
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                var result = MessageBox.Show(error.Message + " Replace?", "Replace?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    File.Delete(_filePath.PathTo);
+                    return true;
+                }
+            }
+            else
+            {
+                MessageBox.Show(error.Message + " Copying was canceled!", "Cancel", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                File.Delete(_filePath.PathTo);
+            }
+
+            return false;
         }
     }
 }
