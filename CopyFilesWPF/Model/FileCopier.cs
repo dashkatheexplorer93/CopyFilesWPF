@@ -78,7 +78,7 @@ namespace CopyFilesWPF.Model
             OnComplete(_gridPanel);
         }
 
-        private bool HandleIOException(CancellationToken cancellationToken, IOException error)
+        private void HandleIOException(CancellationToken cancellationToken, IOException error)
         {
             if (!cancellationToken.IsCancellationRequested)
             {
@@ -86,7 +86,6 @@ namespace CopyFilesWPF.Model
                 if (result == MessageBoxResult.Yes)
                 {
                     File.Delete(_filePath.PathTo);
-                    return true;
                 }
             }
             else
@@ -94,8 +93,6 @@ namespace CopyFilesWPF.Model
                 MessageBox.Show(error.Message + " Copying was canceled!", "Cancel", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 File.Delete(_filePath.PathTo);
             }
-
-            return false;
         }
     }
 }
