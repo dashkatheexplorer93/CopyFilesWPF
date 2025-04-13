@@ -8,10 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee70be4c-9762-4232-97dc-785f2c45b489" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CopyFilesWPF/CopyFilesWPF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CopyFilesWPF/CopyFilesWPF.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CopyFilesWPF/Model/FileCopier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CopyFilesWPF/Model/FileCopier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CopyFilesWPF/Model/MainWindowModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CopyFilesWPF/Model/MainWindowModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CopyFilesWPF/Presenter/MainWindowPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CopyFilesWPF/Presenter/MainWindowPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CopyFilesWPF/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CopyFilesWPF/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +37,11 @@
     <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Model/FileCopier.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Model/FileCopier.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Model/FileCopier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Model/FileCopier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Model/FileCopier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Model/MainWindowModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Presenter/MainWindowPresenter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dariababkova/RiderProjects/CopyFilesWPF/CopyFilesWPF/Presenter/MainWindowPresenter.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -99,7 +101,34 @@
       <workItem from="1744560437820" duration="1000" />
       <workItem from="1744560444165" duration="1000" />
       <workItem from="1744560455960" duration="1000" />
+      <workItem from="1744560475716" duration="4586000" />
+      <workItem from="1744568345277" duration="35000" />
     </task>
+    <task id="LOCAL-00001" summary="add hw 16">
+      <option name="closed" value="true" />
+      <created>1744565002526</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744565002526</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add hw 16">
+      <option name="closed" value="true" />
+      <created>1744567685013</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744567685013</updated>
+    </task>
+    <task id="LOCAL-00003" summary="refactor HandleIOException method">
+      <option name="closed" value="true" />
+      <created>1744568280490</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744568280490</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,5 +149,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="add hw 16" />
+    <MESSAGE value="refactor HandleIOException method" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor HandleIOException method" />
   </component>
 </project>
